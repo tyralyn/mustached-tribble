@@ -75,7 +75,7 @@ statements: statement statements
 		|
 		;
 		
-statement: assignment | methodcall | ifelse /*| forloop	*/
+statement: assignment | methodcall | ifelse | forloop | printstatement 
 		;
 		
 assignment: T_IDENTIFIER T_ASSIGNMENT expression
@@ -120,7 +120,8 @@ block: statement statements
 forloop: T_FOR assignment T_SEMICOLON expression T_SEMICOLON assignment T_OPEN_BRACKET block T_CLOSE_BRACKET
 		;
 		
-		
+printstatement: T_PRINT expression
+		;
 		
 expression: expression T_PLUS expression
 		| expression T_MINUS expression

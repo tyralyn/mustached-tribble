@@ -22,9 +22,20 @@ uChar			[A-Z]
             You will probably want to use exclusive conditions rather
             than inclusive conditions (use the %x instead of the %s). */
 
+%x COMMENT			
+			
 %%
 
+
   /* WRITEME: Write your Flex token rules here */
+  
+
+"/*"			{ BEGIN(COMMENT); }
+<COMMENT> "*/"  { BEGIN(INITIAL); }
+<COMMENT>([^*]|\n)+|.
+<COMMENT><<EOF>>	{printf(%s:%d: Unterminated comment\n", curffilename, yylineno); return 0; }
+
+
   
 "print"			{ 
 						return T_PRINT; }
@@ -55,7 +66,7 @@ uChar			[A-Z]
 
 "false"			{ return T_FALSE; }
 
-(({uChar}|{lChar})({digit}|{uChar}|{lChar})*) {
+(({uChar}|{lChar})({digit}|{uChar}|{lChar})*) { printf("IDENTIFIER KKKKKK\n");
 						return T_IDENTIFIER; }  
   
 ([0]|[1-9]{digit}*) { ;
