@@ -13,6 +13,7 @@
 /* WRITEME: List all your tokens here */
 %token T_NUMBER
 %token T_IDENTIFIER
+%token T_CHILDCLASS_IDENTIFIER T_DECLARATION_IDENTIFIER T_ARGUMENT_IDENTIFIER T_ASSIGNMENT_IDENTIFIER
 
 %token T_PRINT T_RETURN T_IF T_ELSE T_FOR T_NEW T_INT T_BOOL T_NONE T_TRUE T_FALSE
 
@@ -27,159 +28,51 @@
 %right T_NOT T_UNARY_MINUS
 
 %token T_OPEN_PARENS T_CLOSE_PARENS T_OPEN_BRACKET T_CLOSE_BRACKET T_DOT
-
 /* WRITEME: Specify precedence here */
 %%
 
 /* WRITEME: This rule is a placeholder, since Bison requires
             at least one rule to run successfully. Replace
             this with your appropriate start rules. */
-start : class startp
+start : startp
       ;
 
 /* WRITME: Write your Bison grammar specification here */
 
-startp : class startp
+startp : startp T_IDENTIFIER classtype T_OPEN_BRACKET members methods T_CLOSE_BRACKET 
 		|
 		;
 		
+classtype: T_COLON T_IDENTIFIER
+		|
+		;	
 		
-class : T_IDENTIFIER classtyper classbody
-		;
-
-classtyper: T_COLON T_IDENTIFIER 
+arguments: member argumentsp
 		|
 		;
-
-classbody : T_OPEN_BRACKET membersmethods T_CLOSE_BRACKET
+		
+argumentsp: T_COMMA member argumentsp
+		|
 		;
 		
-membersmethods: members T_IDENTIFIER methods
-		| T_IDENTIFIER methods
+methods: T_IDENTIFIER T_OPEN_PARENS arguments T_CLOSE_PARENS T_COLON returntype T_OPEN_BRACKET T_CLOSE_BRACKET
+		|
+		;
 		
+members: members type T_IDENTIFIER
+		|
 		;
-
-members: type T_IDENTIFIER members
+		
+member: type T_IDENTIFIER
 		;
-				
-
+		
+/*body: declarations		*/
 		
 type: T_INT | T_BOOL | T_IDENTIFIER
 		;
 		
-returntype: type | T_NONE
+returntype:	type | T_NONE
 		;
-	
-methods: methods T_OPEN_PARENS arguments T_CLOSE_PARENS T_COLON returntype T_OPEN_BRACKET body T_CLOSE_BRACKET 
-		|
-		;
-		
-arguments: argument argumentsp
-		|
-		;
-		
-argumentsp: T_COMMA argument
-		|
-		;
-		
-argument: type T_IDENTIFIER
-		;
-		
-body: declarations statements returnstatement
-		;
-		
-declarations: declarations declaration
-		|
-		;
-		
-declaration: T_IDENTIFIER T_IDENTIFIER declarationp
-		;
-		
-declarationp: declarationp T_COMMA T_IDENTIFIER
-		|
-		;
-		
-returnstatement: T_RETURN expression
-		|
-		;
-		
-statements: statements statement 
-		|
-		;
-		
-statement: assignment
-		| methodcall
-		| ifelse
-		| forloop
-		| print
-		;
-		
-assignment: T_IDENTIFIER T_ASSIGNMENT expression
-		;
-		
-methodcall: T_IDENTIFIER T_OPEN_PARENS parameters T_CLOSE_PARENS
-		| T_IDENTIFIER T_DOT T_IDENTIFIER T_OPEN_PARENS parameters T_CLOSE_PARENS
-		;
-		
-ifelse: if else
-		;
-		
-if: T_IF expression T_OPEN_BRACKET block T_CLOSE_BRACKET
-		;
-		
-else: T_ELSE T_OPEN_BRACKET block T_CLOSE_BRACKET 
-		|
-		;
-		
-forloop: T_FOR assignment T_SEMICOLON expression T_SEMICOLON assignment T_OPEN_BRACKET block T_CLOSE_BRACKET
-		;
-		
-print: T_PRINT expression
-		;
-		
-block: statement statements
-		;
-		
-parameters: parametersp
-		|
-		;
-		
-parametersp: parametersp T_COMMA expression
-		| expression
-		;
-		
-expression: expression T_PLUS expression
-		| expression T_MINUS expression
-		| expression T_MULTIPLY expression
-		| expression T_DIVIDE expression
-		| expression T_LESS_THAN expression
-		| expression T_LESS_THAN_EQUAL_TO expression
-		| expression T_EQUAL_TO expression
-		| expression T_AND expression
-		| expression T_OR expression
-		| T_NOT expression
-		| T_MINUS expression
-		| T_IDENTIFIER
-		| T_IDENTIFIER T_DOT T_IDENTIFIER
-		| methodcall
-		| T_OPEN_PARENS expression T_CLOSE_PARENS
-		| T_NUMBER
-		| T_FALSE
-		| T_TRUE
-		| T_NEW T_IDENTIFIER
-		| T_NEW T_IDENTIFIER  T_OPEN_PARENS parameters T_CLOSE_PARENS
-		;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		

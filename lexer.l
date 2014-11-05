@@ -25,38 +25,6 @@ uChar			[A-Z]
 %%
 
   /* WRITEME: Write your Flex token rules here */
-
-[{] 			{ return T_OPEN_BRACKET; }
-				
-[}]				{ return T_CLOSE_BRACKET; }
-
-[(]				{ return T_OPEN_PARENS; }
-
-[)]				{ return T_CLOSE_PARENS; }
-
-[+]				{ return T_PLUS; }
-
-[-]				{ return T_MINUS; }
-
-[*]				{ return T_MULTIPLY; }
-
-[/]				{ return T_DIVIDE; }
-
-"=="			{ return T_EQUAL_TO; }
-
-"<="			{ return T_LESS_THAN_EQUAL_TO; }
-
-[=]				{ return T_ASSIGNMENT; }
-
-[<]				{ return T_EQUAL_TO; }
-
-"\." 			{ return T_DOT; }
-
-[:]				{ return T_COLON; }
-
-[;]				{ return T_SEMICOLON; }
-
-[,]				{ return T_COMMA; }
   
 "print"			{ 
 						return T_PRINT; }
@@ -92,6 +60,38 @@ uChar			[A-Z]
   
 ([0]|[1-9]{digit}*) { ;
 						return T_NUMBER; }
+						
+[{] 			{ return T_OPEN_BRACKET; }
+				
+[}]				{ return T_CLOSE_BRACKET; }
+
+[(]				{ return T_OPEN_PARENS; }
+
+[)]				{ return T_CLOSE_PARENS; }
+
+[+]				{ return T_PLUS; }
+
+[-]				{ return T_MINUS; }
+
+[*]				{ return T_MULTIPLY; }
+
+[/]				{ return T_DIVIDE; }
+
+"=="			{ return T_EQUAL_TO; }
+
+"<="			{ return T_LESS_THAN_EQUAL_TO; }
+
+[=]				{ return T_ASSIGNMENT; }
+
+[<]				{ return T_EQUAL_TO; }
+
+"\." 			{ return T_DOT; }
+
+[:]				{ return T_COLON; }
+
+[;]				{ return T_SEMICOLON; }
+
+[,]				{ return T_COMMA; }
 
 
 \n					{ }						
