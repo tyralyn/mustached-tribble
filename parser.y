@@ -54,24 +54,23 @@ classtyper: T_COLON T_IDENTIFIER
 classbody : T_OPEN_BRACKET membersmethods T_CLOSE_BRACKET
 		;
 		
-membersmethods: T_IDENTIFIER members T_IDENTIFIER methods
-		| T_IDENTIFIER members
+membersmethods: members T_IDENTIFIER methods
 		| T_IDENTIFIER methods
 		
 		;
 
-members: T_IDENTIFIER
+members: type T_IDENTIFIER members
 		;
 				
 
 		
-type: T_INT | T_BOOL 
+type: T_INT | T_BOOL | T_IDENTIFIER
 		;
 		
 returntype: type | T_NONE
 		;
-		
-methods: T_OPEN_PARENS arguments T_CLOSE_PARENS T_COLON returntype T_OPEN_BRACKET body T_CLOSE_BRACKET methods
+	
+methods: methods T_OPEN_PARENS arguments T_CLOSE_PARENS T_COLON returntype T_OPEN_BRACKET body T_CLOSE_BRACKET 
 		|
 		;
 		
@@ -83,27 +82,28 @@ argumentsp: T_COMMA argument
 		|
 		;
 		
-argument: T_IDENTIFIER T_IDENTIFIER
+argument: type T_IDENTIFIER
 		;
 		
 body: declarations statements returnstatement
 		;
 		
-declarations: declaration declarations
+declarations: declarations declaration
 		|
 		;
 		
 declaration: T_IDENTIFIER T_IDENTIFIER declarationp
 		;
 		
-declarationp: T_COMMA T_IDENTIFIER declarationp
+declarationp: declarationp T_COMMA T_IDENTIFIER
 		|
 		;
 		
 returnstatement: T_RETURN expression
+		|
 		;
 		
-statements: statement statements
+statements: statements statement 
 		|
 		;
 		
@@ -112,7 +112,6 @@ statement: assignment
 		| ifelse
 		| forloop
 		| print
-		| 
 		;
 		
 assignment: T_IDENTIFIER T_ASSIGNMENT expression
