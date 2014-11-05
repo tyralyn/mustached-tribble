@@ -83,7 +83,7 @@ uChar			[A-Z]
 
 [=]				{ return T_ASSIGNMENT; }
 
-[<]				{ return T_EQUAL_TO; }
+[<]				{ return T_LESS_THAN; }
 
 "\." 			{ return T_DOT; }
 
